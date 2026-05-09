@@ -29,6 +29,7 @@
         <h1 class="article-title" id="articleTitle"></h1>
         <p class="article-summary" id="articleSummary"></p>
         <div class="article-body" id="articleBody"></div>
+        <nav class="article-nav" id="articleNav"></nav>
       </article>
       <aside class="sidebar-card">
         <h2 style="margin-top:0;">文章目录</h2>
@@ -47,10 +48,13 @@
     const id = params.get('id') || 'newbie-quick-start';
     const article = window.HD2_UTILS.getArticle(id) || window.HD2_CONTENTS[0];
     const related = window.HD2_UTILS.relatedArticles(article);
+    const currentIndex = window.HD2_CONTENTS.findIndex(item => item.id === article.id);
+    const prev = currentIndex > 0 ? window.HD2_CONTENTS[currentIndex - 1] : null;
+    const next = currentIndex >= 0 && currentIndex < window.HD2_CONTENTS.length - 1 ? window.HD2_CONTENTS[currentIndex + 1] : null;
 
     document.title = `${article.title} - Helldivers 2 攻略站`;
     document.getElementById('breadcrumb').innerHTML = `
-      <a href="index.html">首页</a><span>/</span><a href="${article.route || 'index.html'}">专题</a><span>/</span><span>${article.title}</span>
+      <a href="index.html">首页</a><span>/</span><a href="list.html">文章列表</a><span>/</span><span>${article.title}</span>
     `;
 
     document.getElementById('articleMeta').innerHTML = `
@@ -61,13 +65,14 @@
     document.getElementById('articleTitle').textContent = article.title;
     document.getElementById('articleSummary').textContent = article.summary;
 
-    document.getElementById('articleBody').innerHTML = article.body.map((p, idx) => `
+    const bodyHtml = article.body.map((p, idx) => `
       <section class="article-section" id="p${idx + 1}">
         <h2>段落 ${idx + 1}</h2>
         <p>${p}</p>
       </section>
     `).join('');
 
+    document.getElementById('articleBody').innerHTML = bodyHtml;
     document.getElementById('toc').innerHTML = article.body.map((_, idx) => `<a href="#p${idx+1}">段落 ${idx+1}</a>`).join('');
     document.getElementById('relatedList').innerHTML = related.map(item => `
       <a href="article.html?id=${item.id}">
@@ -78,6 +83,10 @@
         </div>
       </a>
     `).join('');
+    document.getElementById('articleNav').innerHTML = `
+      ${prev ? `<a href="article.html?id=${prev.id}"><small>上一篇</small><strong>${prev.title}</strong></a>` : '<div></div>'}
+      ${next ? `<a href="article.html?id=${next.id}" style="text-align:right;"><small>下一篇</small><strong>${next.title}</strong></a>` : '<div></div>'}
+    `;
   </script>
 </body>
 </html>

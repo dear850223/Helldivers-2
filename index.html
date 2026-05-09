@@ -32,11 +32,23 @@
         <div class="hero-tags" id="tagFilters">
           <span class="chip active" data-filter="all">全部</span><span class="chip" data-filter="新手">新手</span><span class="chip" data-filter="版本">版本</span><span class="chip" data-filter="虫族">虫族</span><span class="chip" data-filter="机器人">机器人</span><span class="chip" data-filter="任务">任务</span>
         </div>
-        <div class="stat-grid"><div class="stat"><strong>6</strong><span>核心攻略模块</span></div><div class="stat"><strong>4</strong><span>专题页面</span></div><div class="stat"><strong>1</strong><span>统一详情页</span></div></div>
+        <div class="stat-grid"><div class="stat"><strong>100</strong><span>原创攻略内容</span></div><div class="stat"><strong>20</strong><span>首页入口展示</span></div><div class="stat"><strong>1</strong><span>统一详情页</span></div></div>
+        <div class="hero-mini-grid">
+          <div class="mini-card">
+            <span class="mini-label">今日推荐</span>
+            <strong>Major Orders 指南</strong>
+            <p>看懂社区任务与银河战争优先级。</p>
+          </div>
+          <div class="mini-card">
+            <span class="mini-label">热门路线</span>
+            <strong>巢穴 / 撤离 / 防守</strong>
+            <p>高频任务类型的通关思路。</p>
+          </div>
+        </div>
       </div>
 
       <div class="hero-side">
-        <div class="side-box">
+        <div class="side-box accent-box">
           <h2>热门标签</h2>
           <ul class="pill-list" id="keywordChips">
             <li class="pill" data-keyword="新手">新手</li><li class="pill" data-keyword="配装">配装</li><li class="pill" data-keyword="武器">武器</li><li class="pill" data-keyword="打法">打法</li><li class="pill" data-keyword="任务">任务</li><li class="pill" data-keyword="版本">版本</li>
@@ -55,6 +67,7 @@
           <div class="related-list">
             <a href="newbie.html"><div class="detail-card" style="padding:14px;"><div class="tag">新手</div><div style="margin-top:8px; font-weight:800;">新手入门专题</div></div></a>
             <a href="weapons.html"><div class="detail-card" style="padding:14px; margin-top:10px;"><div class="tag">武器</div><div style="margin-top:8px; font-weight:800;">武器与配装专题</div></div></a>
+            <a href="missions.html"><div class="detail-card" style="padding:14px; margin-top:10px;"><div class="tag">任务</div><div style="margin-top:8px; font-weight:800;">任务与阵营专题</div></div></a>
           </div>
         </div>
       </div>
@@ -80,6 +93,14 @@
       <div class="topic-grid" id="topicGrid"></div>
     </section>
 
+    <section class="section card">
+      <div class="section-head"><div><h2>攻略入口</h2><p>这里只展示前 10 篇，想看全部内容请进入文章列表页。</p></div></div>
+      <div class="article-directory" id="articleDirectory"></div>
+      <div class="directory-more-wrap">
+        <a class="directory-more" href="list.html">查看更多</a>
+      </div>
+    </section>
+
     <div class="footer">Helldivers 2 攻略门户 · 由数据驱动维护</div>
   </main>
 
@@ -89,6 +110,7 @@
     const search = document.getElementById('globalSearch');
     const tagFilters = document.querySelectorAll('#tagFilters .chip');
     const keywordChips = document.querySelectorAll('#keywordChips .pill');
+    const directoryItems = window.HD2_CONTENTS.slice(0, 10).sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
 
     const popular = [...window.HD2_CONTENTS].slice(0, 4);
     const latest = [...window.HD2_CONTENTS].sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).slice(0, 3);
@@ -99,15 +121,21 @@
       { title: '任务专题', href: 'missions.html', summary: '阵营打法、防守、撤离与分工。' }
     ];
 
-    document.getElementById('popularGrid').innerHTML = popular.map(a => `<a class="article-link" href="article.html?id=${a.id}"><article class="content-card"><div class="content-top"><h3>${a.title}</h3><span class="content-badge">热门</span></div><p>${a.summary}</p><div class="meta-list">${a.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div></article></a>`).join('');
-    document.getElementById('latestGrid').innerHTML = latest.map(a => `<a class="article-link" href="article.html?id=${a.id}"><article class="topic-card"><h3>${a.title}</h3><p>${a.summary}</p><div class="meta"><span class="tag">${a.category}</span><span class="tag good">${a.updatedAt}</span></div></article></a>`).join('');
+    document.getElementById('popularGrid').innerHTML = popular.map(a => `<a class="article-link" href="articles/${a.slug || a.id}.html"><article class="content-card"><div class="content-top"><h3>${a.title}</h3><span class="content-badge">热门</span></div><p>${a.summary}</p><div class="meta-list">${a.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div></article></a>`).join('');
+    document.getElementById('latestGrid').innerHTML = latest.map(a => `<a class="article-link" href="articles/${a.slug || a.id}.html"><article class="topic-card"><h3>${a.title}</h3><p>${a.summary}</p><div class="meta"><span class="tag">${a.category}</span><span class="tag good">${a.updatedAt}</span></div></article></a>`).join('');
     document.getElementById('hotTags').innerHTML = allTags.map(t => `<span class="chip" data-tag="${t}">${t}</span>`).join('');
     document.getElementById('topicGrid').innerHTML = topics.map(t => `<a class="article-link" href="${t.href}"><article class="topic-card"><h3>${t.title}</h3><p>${t.summary}</p><div class="meta"><span class="tag alt">推荐专题</span></div></article></a>`).join('');
+    document.getElementById('articleDirectory').innerHTML = directoryItems.map((a, i) => `<a class="article-link" href="articles/${a.slug || a.id}.html"><article class="topic-card"><div class="content-top"><h3>${String(i + 1).padStart(2, '0')}. ${a.title}</h3><span class="content-badge">${a.category}</span></div><p>${a.summary}</p><div class="meta"><span class="tag good">${a.updatedAt}</span><span class="tag alt">#${a.tags[0] || '攻略'}</span></div></article></a>`).join('');
 
     function filterByTag(tag) {
       const q = (search.value || tag || '').trim().toLowerCase();
       const filtered = window.HD2_CONTENTS.filter(a => !q || a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q));
       document.querySelectorAll('#popularGrid article, #latestGrid article').forEach((card, idx) => card.classList.toggle('hidden', !filtered[idx % filtered.length] && q));
+      document.querySelectorAll('#articleDirectory article').forEach((card, idx) => {
+        const article = directoryItems[idx];
+        const match = !q || (article && (article.title.toLowerCase().includes(q) || article.tags.join(' ').toLowerCase().includes(q)));
+        card.parentElement.style.display = match ? '' : 'none';
+      });
     }
 
     search.addEventListener('input', () => filterByTag(search.value));

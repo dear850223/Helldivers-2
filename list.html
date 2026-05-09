@@ -40,7 +40,7 @@
         <span class="tag alt" id="countLabel"></span>
       </div>
       <div class="content-grid" id="articleGrid"></div>
-      <div style="display:flex; justify-content:center; gap:10px; margin-top:18px;" id="pagination"></div>
+      <div class="pagination" id="pagination"></div>
     </section>
   </main>
 
@@ -48,6 +48,7 @@
   <script src="data.js"></script>
   <script>
     const pageSize = 4;
+    const maxPagerButtons = 5;
     let currentPage = 1;
     let currentCategory = '全部';
     let currentSort = 'latest';
@@ -64,8 +65,29 @@
       const q = search.value.trim().toLowerCase();
       if (currentCategory !== '全部') items = items.filter(a => a.category === currentCategory);
       if (q) items = items.filter(a => a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q));
-      items.sort((a, b) => currentSort === 'latest' ? b.updatedAt.localeCompare(a.updatedAt) : b.title.localeCompare(a.title));
+      items.sort((a, b) => currentSort === 'latest' ? b.updatedAt.localeCompare(a.updatedAt) : a.title.localeCompare(b.title));
       return items;
+    }
+
+    function renderPager(totalPages) {
+      const buttons = [];
+      const addBtn = (label, page, cls = '') => buttons.push(`<button class="page-btn ${cls}" data-page="${page}" ${page === null ? 'disabled' : ''}>${label}</button>`);
+      addBtn('‹', Math.max(1, currentPage - 1), 'ghost');
+      const half = Math.floor(maxPagerButtons / 2);
+      let start = Math.max(1, currentPage - half);
+      let end = Math.min(totalPages, start + maxPagerButtons - 1);
+      start = Math.max(1, end - maxPagerButtons + 1);
+      if (start > 1) {
+        addBtn('1', 1, currentPage === 1 ? 'active' : '');
+        if (start > 2) buttons.push('<span class="page-btn ghost" style="display:grid;place-items:center;cursor:default;">…</span>');
+      }
+      for (let p = start; p <= end; p++) addBtn(String(p), p, p === currentPage ? 'active' : '');
+      if (end < totalPages) {
+        if (end < totalPages - 1) buttons.push('<span class="page-btn ghost" style="display:grid;place-items:center;cursor:default;">…</span>');
+        addBtn(String(totalPages), totalPages, currentPage === totalPages ? 'active' : '');
+      }
+      addBtn('›', Math.min(totalPages, currentPage + 1), 'ghost');
+      pagination.innerHTML = buttons.join('');
     }
 
     function render() {
@@ -84,7 +106,7 @@
           </article>
         </a>
       `).join('') || '<div class="detail-card">没有找到匹配的文章。</div>';
-      pagination.innerHTML = Array.from({length: totalPages}, (_, i) => i + 1).map(p => `<button class="btn ${p===currentPage?'btn-primary':'btn-secondary'}" data-page="${p}">${p}</button>`).join('');
+      renderPager(totalPages);
     }
 
     document.getElementById('categoryFilters').addEventListener('click', e => {
@@ -98,8 +120,8 @@
     });
 
     search.addEventListener('input', () => { currentPage = 1; render(); });
-    document.getElementById('sortLatest').addEventListener('click', () => { currentSort = 'latest'; render(); });
-    document.getElementById('sortPopular').addEventListener('click', () => { currentSort = 'popular'; render(); });
+    document.getElementById('sortLatest').addEventListener('click', () => { currentSort = 'latest'; currentPage = 1; render(); });
+    document.getElementById('sortPopular').addEventListener('click', () => { currentSort = 'popular'; currentPage = 1; render(); });
     pagination.addEventListener('click', e => {
       const btn = e.target.closest('button[data-page]');
       if (!btn) return;
