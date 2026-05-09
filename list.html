@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helldivers 2 攻略列表</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="brand-mark">H2</div><div>Helldivers 2 战术简报站</div></div>
+      <nav aria-label="主导航">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="list.html">文章列表</a>
+        <a class="nav-link" href="newbie.html">新手</a>
+        <a class="nav-link" href="weapons.html">武器</a>
+        <a class="nav-link" href="missions.html">任务</a>
+      </nav>
+      <div class="search"><input id="listSearch" type="search" placeholder="搜索文章标题 / 标签" aria-label="搜索文章" /></div>
+      <a class="nav-cta" href="index.html#quick">返回首页</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card hero-main" style="margin-top:20px; padding:24px;">
+      <div class="badge">文章列表页 · 分类 / 筛选 / 排序 / 分页</div>
+      <h1 style="max-width:none; margin-top:14px;">攻略目录</h1>
+      <p class="lead">这里是所有攻略文章的统一入口，支持按分类、标签和更新时间筛选，像真正的游戏攻略站目录页一样浏览。</p>
+      <div class="hero-tags" id="categoryFilters"></div>
+      <div class="hero-actions">
+        <button class="btn btn-secondary" id="sortLatest">按最新</button>
+        <button class="btn btn-secondary" id="sortPopular">按热门</button>
+      </div>
+    </section>
+
+    <section class="section card">
+      <div class="section-head">
+        <div><h2>全部文章</h2><p>点击文章进入统一详情页。</p></div>
+        <span class="tag alt" id="countLabel"></span>
+      </div>
+      <div class="content-grid" id="articleGrid"></div>
+      <div style="display:flex; justify-content:center; gap:10px; margin-top:18px;" id="pagination"></div>
+    </section>
+  </main>
+
+  <script src="site.js"></script>
+  <script src="data.js"></script>
+  <script>
+    const pageSize = 4;
+    let currentPage = 1;
+    let currentCategory = '全部';
+    let currentSort = 'latest';
+    const search = document.getElementById('listSearch');
+    const grid = document.getElementById('articleGrid');
+    const pagination = document.getElementById('pagination');
+    const countLabel = document.getElementById('countLabel');
+
+    const categories = ['全部', ...new Set(window.HD2_CONTENTS.map(a => a.category))];
+    document.getElementById('categoryFilters').innerHTML = categories.map(c => `<span class="chip ${c==='全部'?'active':''}" data-category="${c}">${c}</span>`).join('');
+
+    function getFiltered() {
+      let items = [...window.HD2_CONTENTS];
+      const q = search.value.trim().toLowerCase();
+      if (currentCategory !== '全部') items = items.filter(a => a.category === currentCategory);
+      if (q) items = items.filter(a => a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q));
+      items.sort((a, b) => currentSort === 'latest' ? b.updatedAt.localeCompare(a.updatedAt) : b.title.localeCompare(a.title));
+      return items;
+    }
+
+    function render() {
+      const items = getFiltered();
+      const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * pageSize;
+      const view = items.slice(start, start + pageSize);
+      countLabel.textContent = `共 ${items.length} 篇`;
+      grid.innerHTML = view.map(item => `
+        <a class="article-link" href="article.html?id=${item.id}">
+          <article class="content-card">
+            <div class="content-top"><h3>${item.title}</h3><span class="content-badge">${item.updatedAt}</span></div>
+            <p>${item.summary}</p>
+            <div class="meta-list"><span class="tag">${item.category}</span>${item.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div>
+          </article>
+        </a>
+      `).join('') || '<div class="detail-card">没有找到匹配的文章。</div>';
+      pagination.innerHTML = Array.from({length: totalPages}, (_, i) => i + 1).map(p => `<button class="btn ${p===currentPage?'btn-primary':'btn-secondary'}" data-page="${p}">${p}</button>`).join('');
+    }
+
+    document.getElementById('categoryFilters').addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      document.querySelectorAll('#categoryFilters .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentCategory = chip.dataset.category;
+      currentPage = 1;
+      render();
+    });
+
+    search.addEventListener('input', () => { currentPage = 1; render(); });
+    document.getElementById('sortLatest').addEventListener('click', () => { currentSort = 'latest'; render(); });
+    document.getElementById('sortPopular').addEventListener('click', () => { currentSort = 'popular'; render(); });
+    pagination.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-page]');
+      if (!btn) return;
+      currentPage = Number(btn.dataset.page);
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

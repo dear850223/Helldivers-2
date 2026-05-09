@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helldivers 2 战术简报站</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="brand-mark">H2</div><div>Helldivers 2 战术简报站</div></div>
+      <nav aria-label="主导航">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="list.html">文章列表</a>
+        <a class="nav-link" href="newbie.html">新手</a>
+        <a class="nav-link" href="weapons.html">武器</a>
+        <a class="nav-link" href="missions.html">任务</a>
+      </nav>
+      <div class="search"><input id="globalSearch" type="search" placeholder="搜索武器 / 任务 / 阵营 / 配装" aria-label="搜索" /></div>
+      <a class="nav-cta" href="list.html">浏览全部攻略</a>
+    </div>
+  </header>
+
+  <main class="container" id="start">
+    <section class="hero">
+      <div class="card hero-main">
+        <div class="badge">最新版本更新 · 攻略门户 · 实战导向</div>
+        <h1>Helldivers 2 攻略门户</h1>
+        <p class="lead">新手入门、武器配装、任务打法、阵营攻略、版本公告，一站式浏览。这里是更适合查攻略、看更新、找推荐的游戏站首页。</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="list.html">进入文章列表</a><a class="btn btn-secondary" href="#featured">查看热门内容</a></div>
+        <div class="hero-tags" id="tagFilters">
+          <span class="chip active" data-filter="all">全部</span><span class="chip" data-filter="新手">新手</span><span class="chip" data-filter="版本">版本</span><span class="chip" data-filter="虫族">虫族</span><span class="chip" data-filter="机器人">机器人</span><span class="chip" data-filter="任务">任务</span>
+        </div>
+        <div class="stat-grid"><div class="stat"><strong>6</strong><span>核心攻略模块</span></div><div class="stat"><strong>4</strong><span>专题页面</span></div><div class="stat"><strong>1</strong><span>统一详情页</span></div></div>
+      </div>
+
+      <div class="hero-side">
+        <div class="side-box">
+          <h2>热门标签</h2>
+          <ul class="pill-list" id="keywordChips">
+            <li class="pill" data-keyword="新手">新手</li><li class="pill" data-keyword="配装">配装</li><li class="pill" data-keyword="武器">武器</li><li class="pill" data-keyword="打法">打法</li><li class="pill" data-keyword="任务">任务</li><li class="pill" data-keyword="版本">版本</li>
+          </ul>
+        </div>
+        <div class="side-box">
+          <h2>版本公告</h2>
+          <div class="panel">
+            <div style="font-size:13px; color:var(--muted);">最新更新</div>
+            <div style="font-size:18px; font-weight:800; margin-top:2px;">站点已转为攻略门户结构</div>
+            <p style="margin:10px 0 0; color:var(--muted);">支持文章列表、统一详情页与数据驱动渲染。</p>
+          </div>
+        </div>
+        <div class="side-box">
+          <h2>推荐专题</h2>
+          <div class="related-list">
+            <a href="newbie.html"><div class="detail-card" style="padding:14px;"><div class="tag">新手</div><div style="margin-top:8px; font-weight:800;">新手入门专题</div></div></a>
+            <a href="weapons.html"><div class="detail-card" style="padding:14px; margin-top:10px;"><div class="tag">武器</div><div style="margin-top:8px; font-weight:800;">武器与配装专题</div></div></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section card" id="featured">
+      <div class="section-head"><div><h2>热门文章</h2><p>优先展示最适合入门和回流玩家的高点击内容。</p></div><a class="nav-link" href="list.html">查看更多</a></div>
+      <div class="content-grid" id="popularGrid"></div>
+    </section>
+
+    <section class="section card">
+      <div class="section-head"><div><h2>最新更新</h2><p>按照更新时间展示最近最活跃的内容。</p></div></div>
+      <div class="topic-grid" id="latestGrid"></div>
+    </section>
+
+    <section class="section card">
+      <div class="section-head"><div><h2>热门标签</h2><p>快速进入当前最常搜索的主题。</p></div></div>
+      <div class="hero-tags" id="hotTags"></div>
+    </section>
+
+    <section class="section card">
+      <div class="section-head"><div><h2>推荐专题</h2><p>结构化浏览更适合攻略站。</p></div></div>
+      <div class="topic-grid" id="topicGrid"></div>
+    </section>
+
+    <div class="footer">Helldivers 2 攻略门户 · 由数据驱动维护</div>
+  </main>
+
+  <script src="site.js"></script>
+  <script src="data.js"></script>
+  <script>
+    const search = document.getElementById('globalSearch');
+    const tagFilters = document.querySelectorAll('#tagFilters .chip');
+    const keywordChips = document.querySelectorAll('#keywordChips .pill');
+
+    const popular = [...window.HD2_CONTENTS].slice(0, 4);
+    const latest = [...window.HD2_CONTENTS].sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).slice(0, 3);
+    const allTags = [...new Set(window.HD2_CONTENTS.flatMap(a => a.tags))].slice(0, 10);
+    const topics = [
+      { title: '新手专题', href: 'newbie.html', summary: '新手入坑、开荒路线、基础机制。' },
+      { title: '武器专题', href: 'weapons.html', summary: '强势武器、配装推荐、场景搭配。' },
+      { title: '任务专题', href: 'missions.html', summary: '阵营打法、防守、撤离与分工。' }
+    ];
+
+    document.getElementById('popularGrid').innerHTML = popular.map(a => `<a class="article-link" href="article.html?id=${a.id}"><article class="content-card"><div class="content-top"><h3>${a.title}</h3><span class="content-badge">热门</span></div><p>${a.summary}</p><div class="meta-list">${a.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div></article></a>`).join('');
+    document.getElementById('latestGrid').innerHTML = latest.map(a => `<a class="article-link" href="article.html?id=${a.id}"><article class="topic-card"><h3>${a.title}</h3><p>${a.summary}</p><div class="meta"><span class="tag">${a.category}</span><span class="tag good">${a.updatedAt}</span></div></article></a>`).join('');
+    document.getElementById('hotTags').innerHTML = allTags.map(t => `<span class="chip" data-tag="${t}">${t}</span>`).join('');
+    document.getElementById('topicGrid').innerHTML = topics.map(t => `<a class="article-link" href="${t.href}"><article class="topic-card"><h3>${t.title}</h3><p>${t.summary}</p><div class="meta"><span class="tag alt">推荐专题</span></div></article></a>`).join('');
+
+    function filterByTag(tag) {
+      const q = (search.value || tag || '').trim().toLowerCase();
+      const filtered = window.HD2_CONTENTS.filter(a => !q || a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q));
+      document.querySelectorAll('#popularGrid article, #latestGrid article').forEach((card, idx) => card.classList.toggle('hidden', !filtered[idx % filtered.length] && q));
+    }
+
+    search.addEventListener('input', () => filterByTag(search.value));
+    tagFilters.forEach(chip => chip.addEventListener('click', () => { tagFilters.forEach(c=>c.classList.remove('active')); chip.classList.add('active'); filterByTag(chip.dataset.filter === 'all' ? '' : chip.dataset.filter); }));
+    keywordChips.forEach(chip => chip.addEventListener('click', () => { search.value = chip.dataset.keyword; filterByTag(chip.dataset.keyword); }));
+    document.getElementById('hotTags').addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      search.value = chip.dataset.tag;
+      filterByTag(chip.dataset.tag);
+    });
+  </script>
+</body>
+</html>

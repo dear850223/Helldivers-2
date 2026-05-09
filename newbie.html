@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helldivers 2 新手攻略</title>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="brand-mark">H2</div><div>Helldivers 2 战术简报站</div></div>
+      <nav aria-label="主导航">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="list.html">文章列表</a>
+        <a class="nav-link" href="newbie.html">新手</a>
+        <a class="nav-link" href="weapons.html">武器</a>
+        <a class="nav-link" href="missions.html">任务</a>
+      </nav>
+      <div class="search"><input type="search" placeholder="搜索武器 / 任务 / 阵营 / 配装" aria-label="搜索" /></div>
+      <a class="nav-cta" href="index.html#featured">返回首页</a>
+    </div>
+  </header>
+  <main class="container">
+    <div class="detail-layout">
+      <article class="detail-card" id="pageRoot"></article>
+      <aside class="sidebar-card">
+        <h2 style="margin-top:0;">相关内容</h2>
+        <div class="related-list" id="sidebarRelated"></div>
+      </aside>
+    </div>
+  </main>
+  <script src="site.js"></script>
+  <script src="data.js"></script>
+  <script>
+    const items = window.HD2_CONTENTS.filter(a => a.category === '新手' || a.tags.includes('新手') || a.tags.includes('单人'));
+    const root = document.getElementById('pageRoot');
+    root.innerHTML = `
+      <div class="breadcrumb"><a href="index.html">首页</a><span>/</span><span>新手专题</span></div>
+      <div class="article-meta"><span class="tag">新手专题</span><span class="tag good">动态渲染</span></div>
+      <h1 class="article-title">新手专题</h1>
+      <p class="article-summary">展示新手、单人、开黑等相关内容，后续只需要改 data.js 即可。</p>
+      <div class="article-body">
+        ${items.map(a => `
+          <a href="article.html?id=${a.id}">
+            <section class="article-section">
+              <h2>${a.title}</h2>
+              <p>${a.summary}</p>
+              <div class="meta-list">${a.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div>
+            </section>
+          </a>
+        `).join('')}
+      </div>
+    `;
+    document.getElementById('sidebarRelated').innerHTML = window.HD2_UTILS.relatedArticles(window.HD2_CONTENTS[0]).map(a => `<a href="article.html?id=${a.id}"><div class="detail-card" style="padding:14px;"><div class="tag">${a.category}</div><div style="margin-top:8px; font-weight:800;">${a.title}</div></div></a>`).join('');
+  </script>
+</body>
+</html>
