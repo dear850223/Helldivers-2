@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Helldivers 2 攻略列表</title>
   <link rel="stylesheet" href="site.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4435032913873442"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="topbar">
@@ -44,9 +46,21 @@
     </section>
   </main>
 
-  <script src="site.js"></script>
-  <script src="data.js"></script>
   <script>
+    const articles = [
+      { id: 'newbie-quick-start', title: '新手 10 分钟入门', category: '新手', updatedAt: '2026-05-09', summary: '值不值得玩、前期做什么、先解锁什么、如何少踩坑。', tags: ['新手', '入坑', '开荒'] },
+      { id: 'best-loadout', title: '当前版本最稳配装', category: '版本', updatedAt: '2026-05-09', summary: '围绕版本环境整理武器、护甲、投掷物和 Stratagem 组合。', tags: ['版本', '配装', '武器'] },
+      { id: 'enemy-factions', title: '虫族 / 机器人打法', category: '打法', updatedAt: '2026-05-09', summary: '按阵营拆解战术、跑位、清怪、保命和撤离思路。', tags: ['虫族', '机器人', '打法'] },
+      { id: 'single-player', title: '单刷 / 双排 / 四排', category: '模式', updatedAt: '2026-05-09', summary: '不同人数的打法区别、职责分工和沟通重点。', tags: ['单人', '开黑', '队伍'] },
+      { id: 'weapon-guide', title: '当前版本强势武器推荐', category: '武器', updatedAt: '2026-05-09', summary: '按清杂、对甲、控场、容错四类场景整理。', tags: ['版本', '武器', '高优先级'] },
+      { id: 'mission-guide', title: '防守 / 撤离任务', category: '任务', updatedAt: '2026-05-09', summary: '最容易翻车的节点，优先给出保命和沟通策略。', tags: ['任务', '防守', '撤离'] },
+      { id: 'team-roles', title: '团队分工模板', category: '团队', updatedAt: '2026-05-09', summary: '输出、控场、补给、救援四个角色的分配建议。', tags: ['开黑', '分工', '团队'] },
+      { id: 'strategy-guide', title: '战略配备指南：种类详解与排名', category: '版本', updatedAt: '2026-05-09', summary: '围绕支援武器、轨道、鹰式、哨兵和背包，整理一套更适合实战的选择思路。', tags: ['战略配备', '支持武器', '鹰式打击'] },
+      { id: 'major-orders-guide', title: 'Major Orders 指南：赢得银河战争的胜利', category: '任务', updatedAt: '2026-05-09', summary: '解释 Major Orders 的意义、为什么常失败，以及普通玩家如何有效贡献。', tags: ['Major Orders', '银河战争', '社区协作'] },
+      { id: 'nest-guide', title: '巢穴攻略：无伤摧毁，避免被围攻', category: '虫族', updatedAt: '2026-05-09', summary: '围绕虫族巢穴的安全距离、拆除顺序、武器选择与撤离节奏。', tags: ['虫族', '巢穴', '可选目标'] },
+      { id: 'mission-types-guide', title: '任务类型详解指南', category: '任务', updatedAt: '2026-05-09', summary: '把行动、主目标、可选目标、战役类型和奖励机制拆开讲清楚。', tags: ['任务', '流程', '可选目标'] },
+      { id: 'weapon-guide', title: '当前版本强势武器推荐', category: '武器', updatedAt: '2026-05-09', summary: '按清杂、对甲、控场、容错四类场景整理。', tags: ['版本', '武器', '高优先级'] }
+    ];
     const pageSize = 4;
     const maxPagerButtons = 5;
     let currentPage = 1;
@@ -57,14 +71,14 @@
     const pagination = document.getElementById('pagination');
     const countLabel = document.getElementById('countLabel');
 
-    const categories = ['全部', ...new Set(window.HD2_CONTENTS.map(a => a.category))];
+    const categories = ['全部', ...new Set(articles.map(a => a.category))];
     document.getElementById('categoryFilters').innerHTML = categories.map(c => `<span class="chip ${c==='全部'?'active':''}" data-category="${c}">${c}</span>`).join('');
 
     function getFiltered() {
-      let items = [...window.HD2_CONTENTS];
+      let items = [...articles];
       const q = search.value.trim().toLowerCase();
       if (currentCategory !== '全部') items = items.filter(a => a.category === currentCategory);
-      if (q) items = items.filter(a => a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q));
+      if (q) items = items.filter(a => a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q) || a.summary.toLowerCase().includes(q));
       items.sort((a, b) => currentSort === 'latest' ? b.updatedAt.localeCompare(a.updatedAt) : a.title.localeCompare(b.title));
       return items;
     }
@@ -98,7 +112,7 @@
       const view = items.slice(start, start + pageSize);
       countLabel.textContent = `共 ${items.length} 篇`;
       grid.innerHTML = view.map(item => `
-        <a class="article-link" href="article.html?id=${item.id}">
+        <a class="article-link" href="articles/${item.id}.html">
           <article class="content-card">
             <div class="content-top"><h3>${item.title}</h3><span class="content-badge">${item.updatedAt}</span></div>
             <p>${item.summary}</p>

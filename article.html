@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Helldivers 2 文章详情</title>
   <link rel="stylesheet" href="site.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4435032913873442"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="topbar">
@@ -41,52 +43,37 @@
     </div>
   </main>
 
-  <script src="site.js"></script>
-  <script src="data.js"></script>
   <script>
+    const articles = [
+      { id: 'newbie-quick-start', title: '新手 10 分钟入门', category: '新手', updatedAt: '2026-05-09', summary: '值不值得玩、前期做什么、先解锁什么、如何少踩坑。', tags: ['新手', '入坑', '开荒'], body: ['新手前 5 局不要急着追求击杀数，核心目标只有三个：活着、会撤、能交任务。Helldivers 2 的很多失败不是火力不够，而是队伍在错误的时间停下来交火。你应该把“移动路线”和“撤离路线”放在和枪法同等重要的位置。', '开局优先熟悉地图上的 4 类关键点：补给、目标点、撤离点、支援投放位置。一般来说，队伍离目标 150 到 250 米时就要开始规划绕路，避免把撤离路线穿进大量敌人刷新区。', '武器选择上，优先选“失误成本低”的装备。也就是容弹量够、后坐力小、连续命中门槛不高的武器。新手最常见的错误是过早追求高爆武器，结果把自己炸进复活循环。', '配装建议把顺序排成：主武器稳定输出、支援武器对甲或控场、投掷物处理密集敌群、补给类 Stratagem 保证续航。只要你能保证 2 分钟内不依赖队友救场，就说明这套开荒配装是及格的。', '如果你经常暴毙，不要先怪队友，先检查两个地方：一是有没有持续站在空旷地带，二是有没有在交火时忘记看小地图。新手阶段最有效的提升，是把“看到敌人就站住打”改成“打两秒就换位”。'] },
+      { id: 'best-loadout', title: '当前版本最稳配装', category: '版本', updatedAt: '2026-05-09', summary: '围绕版本环境整理武器、护甲、投掷物和 Stratagem 组合。', tags: ['版本', '配装', '武器'], body: ['“最稳配装”不是单看伤害，而是看容错。一个稳定的实战配装，至少要同时满足：清杂效率不低、遇到重甲时有手段、弹药压力可控、队友倒地时能继续推进。', '如果按照场景拆分，推荐优先考虑四个模板：清杂模板、对甲模板、控场模板、全能模板。清杂模板注重弹幕覆盖和范围压制；对甲模板要求能在 10 到 15 秒内稳定拆掉中大型目标；控场模板则要能把敌群拉扯在安全距离外。', '实战里最关键的不是“多强”，而是“多不挑图”。比如狭窄地形更适合高机动和近中距武器，平原图更适合远程火力和压制型 Stratagem。你应该把地图开阔度、敌人类型、队伍人数一起纳入配装判断。', '从团队视角看，四排里最好至少有一套对甲与一套补给/复活支援。双排时，一个人负责稳定输出，另一个人负责清场和应急。单刷则要把补给和撤离能力放在第一位，优先确保“打得完”和“跑得掉”。', '若要快速判断配装是否合格，可以用 3 个标准：前 3 分钟是否会频繁空枪、遇到精英怪时是否需要队友硬救、撤离阶段是否仍有弹药与手段。满足这三个条件，基本就算是一套版本可用的稳配装。'] },
+      { id: 'enemy-factions', title: '虫族 / 机器人打法', category: '打法', updatedAt: '2026-05-09', summary: '按阵营拆解战术、跑位、清怪、保命和撤离思路。', tags: ['虫族', '机器人', '打法'], body: ['虫族和机器人的打法逻辑完全不同。虫族更像是持续追击与包围战，重点在于控制近身压力和路线；机器人则更强调远程压制和点位选择，尤其不能长时间暴露在火线里。', '打虫族时，移动比输出更重要。你需要不断利用地形和掩体，把敌群拉成“细长队列”，这样范围武器和持续火力的效率会明显提升。经验上，队伍如果每次停火超过 3 秒，虫群就容易从侧翼和后方完成包夹。', '打机器人时，优先处理具有远程威胁和高火力的单位。不要和机器人阵营在开阔地硬拼，应该先找高度差或岩体遮挡，逐步把敌人引到不利位置。面对重装单位时，队伍最好在 5 到 8 秒内完成集火，不然会被持续压制。', '两种阵营的通用原则是：先控场，再输出。很多翻车局都是因为队伍在目标点前停留太久，导致敌人刷新压力指数级增加。你应该把“推进节奏”当成任务的一部分，而不是打完一波再走。', '如果要给阵营打法打分，虫族看的是移动效率和撤离能力，机器人看的是站位和反压制能力。把这两个维度练好，你在高难下的稳定性会提升非常明显。'] },
+      { id: 'single-player', title: '单刷 / 双排 / 四排', category: '模式', updatedAt: '2026-05-09', summary: '不同人数的打法区别、职责分工和沟通重点。', tags: ['单人', '开黑', '队伍'], body: ['单刷最重要的是控风险。你的目标不是打出最高输出，而是在没有队友兜底的情况下，仍能稳定完成任务。通常来说，单刷应该把机动、补给、撤离和对单体目标的处理能力放在优先级最高的位置。', '双排是最容易形成节奏的模式。一个人可以负责火力和推进，另一个人负责控场、补给或远程处理。当两个人的职责明确后，任务效率会比“各打各的”高很多，尤其是清巢和撤离阶段。', '四排的核心不是人人都很强，而是每个人都知道自己负责什么。最稳的四排结构一般包括：主输出、对甲位、补给位、救援位。这样即使其中一人倒地，也不会直接让整队失去功能。', '无论几人队，沟通节奏都建议保持短句、明确、可执行。比起“那边好多怪”，更好的说法是“左前 20 米有重甲”“撤离点等 30 秒”“我没弹药了”。信息越具体，队伍越不容易乱。', '如果你想提升整体通关率，最值得练的不是枪法，而是“团队节奏感”：什么时候前推、什么时候撤、什么时候停火补给。这个能力在高难度下比单纯的伤害数字更重要。'] },
+      { id: 'weapon-guide', title: '当前版本强势武器推荐', category: '武器', updatedAt: '2026-05-09', summary: '按清杂、对甲、控场、容错四类场景整理。', tags: ['版本', '武器', '高优先级'], body: ['武器推荐不能只看“理论伤害”，要看有效伤害和使用门槛。实际游戏里，弹道稳定性、换弹时间、持续开火能力和对不同敌人的适配性，往往比面板更重要。', '清杂武器的目标是减少队伍压力，让前线不被小怪拖住。对甲武器则要求在目标出现后快速给出结果，避免中大型敌人把战线打穿。控场武器的价值在于拖延时间，让队友把火力投到更关键的目标上。', '如果从新手友好度来排，稳定性高、容错高、操作简单的武器通常更值得优先练。很多新手容易误把“需要点技巧的强武器”当成最佳选择，结果在高压环境里打不出同样效果。', '选择武器时也要考虑队伍职责。如果你队里已经有人专职对甲，就不必再堆重复功能；反过来，如果队伍缺少清杂能力，那么一把你自己用得顺手的清场枪比纸面更强的武器更有价值。', '实战建议是：每个玩家至少准备一套稳清杂、一套稳对甲、一套保命撤离配置。这样在不同任务和不同阵营下，你都能快速切换而不是被版本牵着走。'] },
+      { id: 'mission-guide', title: '防守 / 撤离任务', category: '任务', updatedAt: '2026-05-09', summary: '最容易翻车的节点，优先给出保命和沟通策略。', tags: ['任务', '防守', '撤离'], body: ['防守任务的核心是提前布置，而不是临场补救。正式开波前，团队最好先确认补给位置、火力覆盖范围和复活后回线的路线。只要开局 20 秒的站位没定好，后面就容易被敌潮打散。', '撤离任务最怕的不是怪多，而是队伍分散。建议在进入撤离阶段前统一集合，给每个人明确撤离方向和倒地后优先救援顺序。这样即便局势变差，也能保住最后一波的节奏。', '从节奏上看，防守任务要尽量缩短空档期，撤离任务要尽量减少来回跑动。前者看的是阵地稳定性，后者看的是路线规划能力。如果队伍在这两个环节反复失误，就会出现“明明打赢了却没完成任务”的情况。', '建议把任务过程中最危险的 3 个点标出来：第一次接敌、目标刷新后、撤离前 30 秒。只要你能在这三个时间点保持队形不乱，任务成功率会明显提高。', '很多高难任务不是输在打不动，而是输在最后一小段被打散。真正成熟的队伍，会把最后 10% 的撤离过程当成最重要的阶段来处理。'] },
+      { id: 'team-roles', title: '团队分工模板', category: '团队', updatedAt: '2026-05-09', summary: '输出、控场、补给、救援四个角色的分配建议。', tags: ['开黑', '分工', '团队'], body: ['团队分工不是形式主义，而是把每个人的操作压力平均分散。最稳的方式，是让每位玩家只在自己擅长的环节承担最大责任，这样队伍整体稳定性会高得多。', '主输出位负责主要伤害和推进节奏；控场位负责压制小怪、分担压力；补给位负责弹药和支援呼叫；救援位则盯着倒地、复活和撤离口令。只要这四个角色不重叠，很多混乱场面都能被扳回来。', '如果是临时组队，建议先分职责再开打，而不是进图后才讨论。通常在进入第一目标点前的 30 秒内把角色分明，整体效率会高不少。', '固定队可以进一步细化到地图习惯：谁先探路，谁负责标记敌人，谁盯撤离点，谁带补给。长期来看，这种约定比单纯依赖语音喊话要稳定得多。', '分工最怕的情况是所有人都想输出，结果没人救人、没人补给、没人看路线。一个真正成熟的队伍，应该让“没人负责的事”尽可能接近于零。'] },
+      { id: 'strategy-guide', title: '战略配备指南：种类详解与排名', category: '版本', updatedAt: '2026-05-09', summary: '围绕支援武器、轨道、鹰式、哨兵和背包，整理一套更适合实战的选择思路。', tags: ['战略配备', '支持武器', '鹰式打击'], body: ['为什么战略配备比单把枪更重要', '支持武器该怎么选', '轨道与鹰式怎么分工', '哨兵和地雷的正确打开方式', '背包位如何决定打法', '实战结论'] },
+      { id: 'major-orders-guide', title: 'Major Orders 指南：赢得银河战争的胜利', category: '任务', updatedAt: '2026-05-09', summary: '解释 Major Orders 的意义、为什么常失败，以及普通玩家如何有效贡献。', tags: ['Major Orders', '银河战争', '社区协作'], body: ['Major Orders 是什么', '为什么很多人总是跟错方向', '玩家能做的最有效事情', '配装为什么要跟着战区走', '小队协作比个人效率更关键', '实战结论'] },
+      { id: 'nest-guide', title: '巢穴攻略：无伤摧毁，避免被围攻', category: '虫族', updatedAt: '2026-05-09', summary: '围绕虫族巢穴的安全距离、拆除顺序、武器选择与撤离节奏。', tags: ['虫族', '巢穴', '可选目标'], body: ['巢穴为什么危险', '先看距离，再决定怎么打', '推荐处理顺序', '虫族战区下的推荐配装思路', '最常见的失误', '实战结论'] },
+      { id: 'mission-types-guide', title: '任务类型详解指南', category: '任务', updatedAt: '2026-05-09', summary: '把行动、主目标、可选目标、战役类型和奖励机制拆开讲清楚。', tags: ['任务', '流程', '可选目标'], body: ['行动和任务怎么理解', '主目标与撤离的关系', '可选目标值不值得做', '不同战役类型的思路', '奖励与效率怎么平衡', '实战建议'] }
+    ];
     const params = new URLSearchParams(location.search);
     const id = params.get('id') || 'newbie-quick-start';
-    const article = window.HD2_UTILS.getArticle(id) || window.HD2_CONTENTS[0];
-    const related = window.HD2_UTILS.relatedArticles(article);
-    const currentIndex = window.HD2_CONTENTS.findIndex(item => item.id === article.id);
-    const prev = currentIndex > 0 ? window.HD2_CONTENTS[currentIndex - 1] : null;
-    const next = currentIndex >= 0 && currentIndex < window.HD2_CONTENTS.length - 1 ? window.HD2_CONTENTS[currentIndex + 1] : null;
+    const article = articles.find(item => item.id === id) || articles[0];
+    const related = articles.filter(item => article.related?.includes(item.id));
+    const currentIndex = articles.findIndex(item => item.id === article.id);
+    const prev = currentIndex > 0 ? articles[currentIndex - 1] : null;
+    const next = currentIndex >= 0 && currentIndex < articles.length - 1 ? articles[currentIndex + 1] : null;
 
     document.title = `${article.title} - Helldivers 2 攻略站`;
-    document.getElementById('breadcrumb').innerHTML = `
-      <a href="index.html">首页</a><span>/</span><a href="list.html">文章列表</a><span>/</span><span>${article.title}</span>
-    `;
-
-    document.getElementById('articleMeta').innerHTML = `
-      <span class="tag">${article.category}</span>
-      ${article.tags.map(tag => `<span class="tag alt">${tag}</span>`).join('')}
-      <span class="tag good">更新于 ${article.updatedAt}</span>
-    `;
+    document.getElementById('breadcrumb').innerHTML = `<a href="index.html">首页</a><span>/</span><a href="list.html">文章列表</a><span>/</span><span>${article.title}</span>`;
+    document.getElementById('articleMeta').innerHTML = `<span class="tag">${article.category}</span>${article.tags.map(tag => `<span class="tag alt">${tag}</span>`).join('')}<span class="tag good">更新于 ${article.updatedAt}</span>`;
     document.getElementById('articleTitle').textContent = article.title;
     document.getElementById('articleSummary').textContent = article.summary;
-
-    const bodyHtml = article.body.map((p, idx) => `
-      <section class="article-section" id="p${idx + 1}">
-        <h2>段落 ${idx + 1}</h2>
-        <p>${p}</p>
-      </section>
-    `).join('');
-
-    document.getElementById('articleBody').innerHTML = bodyHtml;
-    document.getElementById('toc').innerHTML = article.body.map((_, idx) => `<a href="#p${idx+1}">段落 ${idx+1}</a>`).join('');
-    document.getElementById('relatedList').innerHTML = related.map(item => `
-      <a href="article.html?id=${item.id}">
-        <div class="detail-card" style="padding:14px;">
-          <div class="tag">${item.category}</div>
-          <div style="margin-top:8px; font-weight:800;">${item.title}</div>
-          <div style="color:var(--muted); font-size:13px; margin-top:6px;">${item.summary}</div>
-        </div>
-      </a>
-    `).join('');
-    document.getElementById('articleNav').innerHTML = `
-      ${prev ? `<a href="article.html?id=${prev.id}"><small>上一篇</small><strong>${prev.title}</strong></a>` : '<div></div>'}
-      ${next ? `<a href="article.html?id=${next.id}" style="text-align:right;"><small>下一篇</small><strong>${next.title}</strong></a>` : '<div></div>'}
-    `;
+    document.getElementById('articleBody').innerHTML = article.body.map((p, idx) => `<section class="article-section" id="p${idx + 1}"><h2>${article.sections?.[idx]?.h || `段落 ${idx + 1}`}</h2><p>${article.sections?.[idx]?.p || p}</p></section>`).join('');
+    document.getElementById('toc').innerHTML = article.body.map((_, idx) => `<a href="#p${idx + 1}">第 ${idx + 1} 节</a>`).join('');
+    document.getElementById('relatedList').innerHTML = related.map(item => `<a href="article.html?id=${item.id}"><div class="detail-card" style="padding:14px;"><div class="tag">${item.category}</div><div style="margin-top:8px; font-weight:800;">${item.title}</div><div style="color:var(--muted); font-size:13px; margin-top:6px;">${item.summary}</div></div></a>`).join('');
+    document.getElementById('articleNav').innerHTML = `${prev ? `<a href="article.html?id=${prev.id}"><small>上一篇</small><strong>${prev.title}</strong></a>` : '<div></div>'}${next ? `<a href="article.html?id=${next.id}" style="text-align:right;"><small>下一篇</small><strong>${next.title}</strong></a>` : '<div></div>'}`;
   </script>
 </body>
 </html>

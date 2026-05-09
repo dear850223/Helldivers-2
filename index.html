@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Helldivers 2 战术简报站</title>
   <link rel="stylesheet" href="site.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4435032913873442"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="topbar">
@@ -104,40 +106,63 @@
     <div class="footer">Helldivers 2 攻略门户 · 由数据驱动维护</div>
   </main>
 
-  <script src="site.js"></script>
-  <script src="data.js"></script>
   <script>
-    const search = document.getElementById('globalSearch');
-    const tagFilters = document.querySelectorAll('#tagFilters .chip');
-    const keywordChips = document.querySelectorAll('#keywordChips .pill');
-    const directoryItems = window.HD2_CONTENTS.slice(0, 10).sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
-
-    const popular = [...window.HD2_CONTENTS].slice(0, 4);
-    const latest = [...window.HD2_CONTENTS].sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).slice(0, 3);
-    const allTags = [...new Set(window.HD2_CONTENTS.flatMap(a => a.tags))].slice(0, 10);
+    const popular = [
+      { title: '新手 10 分钟入门', href: 'articles/newbie-quick-start.html', summary: '值不值得玩、前期做什么、先解锁什么、如何少踩坑。', category: '新手', updatedAt: '2026-05-09', tags: ['新手', '入坑', '开荒'] },
+      { title: '当前版本最稳配装', href: 'articles/best-loadout.html', summary: '围绕版本环境整理武器、护甲、投掷物和 Stratagem 组合。', category: '版本', updatedAt: '2026-05-09', tags: ['版本', '配装', '武器'] },
+      { title: '虫族 / 机器人打法', href: 'articles/enemy-factions.html', summary: '按阵营拆解战术、跑位、清怪、保命和撤离思路。', category: '打法', updatedAt: '2026-05-09', tags: ['虫族', '机器人', '打法'] },
+      { title: '防守 / 撤离任务', href: 'articles/mission-guide.html', summary: '最容易翻车的节点，优先给出保命和沟通策略。', category: '任务', updatedAt: '2026-05-09', tags: ['任务', '防守', '撤离'] }
+    ];
+    const latest = [
+      { title: 'Helldivers 2 任务地图路线 28', href: 'articles/任务-28.html', summary: '任务方向的热门攻略：任务地图路线，提供更完整的实战路径、关键判断和队伍建议。', category: '任务', updatedAt: '2026-05-02' },
+      { title: 'Helldivers 2 版本最强配装 91', href: 'articles/版本-91.html', summary: '版本方向的热门攻略：版本最强配装，提供更完整的实战路径、关键判断和队伍建议。', category: '版本', updatedAt: '2026-05-02' },
+      { title: 'Helldivers 2 新手撤离技巧 88', href: 'articles/新手-88.html', summary: '新手方向的热门攻略：新手撤离技巧，提供更完整的实战路径、关键判断和队伍建议。', category: '新手', updatedAt: '2026-05-08' }
+    ];
+    const directoryItems = [
+      { title: '新手 10 分钟入门', href: 'articles/newbie-quick-start.html', category: '新手', updatedAt: '2026-05-09', summary: '值不值得玩、前期做什么、先解锁什么、如何少踩坑。', tag: '新手' },
+      { title: '当前版本最稳配装', href: 'articles/best-loadout.html', category: '版本', updatedAt: '2026-05-09', summary: '围绕版本环境整理武器、护甲、投掷物和 Stratagem 组合。', tag: '版本' },
+      { title: '虫族 / 机器人打法', href: 'articles/enemy-factions.html', category: '打法', updatedAt: '2026-05-09', summary: '按阵营拆解战术、跑位、清怪、保命和撤离思路。', tag: '虫族' },
+      { title: '防守 / 撤离任务', href: 'articles/mission-guide.html', category: '任务', updatedAt: '2026-05-09', summary: '最容易翻车的节点，优先给出保命和沟通策略。', tag: '任务' },
+      { title: 'Major Orders 指南', href: 'articles/major-orders-guide.html', category: '任务', updatedAt: '2026-05-09', summary: '解释 Major Orders 的意义、为什么常失败，以及普通玩家如何有效贡献。', tag: 'Major Orders' },
+      { title: '巢穴攻略', href: 'articles/nest-guide.html', category: '虫族', updatedAt: '2026-05-09', summary: '围绕虫族巢穴的安全距离、拆除顺序、武器选择与撤离节奏。', tag: '巢穴' },
+      { title: '团队分工模板', href: 'articles/team-roles.html', category: '团队', updatedAt: '2026-05-09', summary: '输出、控场、补给、救援四个角色的分配建议。', tag: '团队' },
+      { title: '战略配备指南', href: 'articles/strategy-guide.html', category: '版本', updatedAt: '2026-05-09', summary: '围绕支援武器、轨道、鹰式、哨兵和背包的实战选择思路。', tag: '战略配备' },
+      { title: '任务类型详解指南', href: 'articles/mission-types-guide.html', category: '任务', updatedAt: '2026-05-09', summary: '把行动、主目标、可选目标、战役类型和奖励机制拆开讲清楚。', tag: '任务' },
+      { title: '当前版本强势武器推荐', href: 'articles/weapon-guide.html', category: '武器', updatedAt: '2026-05-09', summary: '按清杂、对甲、控场、容错四类场景整理。', tag: '武器' }
+    ];
+    const allTags = ['新手', '配装', '武器', '打法', '任务', '版本', '虫族', '机器人'];
     const topics = [
       { title: '新手专题', href: 'newbie.html', summary: '新手入坑、开荒路线、基础机制。' },
       { title: '武器专题', href: 'weapons.html', summary: '强势武器、配装推荐、场景搭配。' },
       { title: '任务专题', href: 'missions.html', summary: '阵营打法、防守、撤离与分工。' }
     ];
 
-    document.getElementById('popularGrid').innerHTML = popular.map(a => `<a class="article-link" href="articles/${a.slug || a.id}.html"><article class="content-card"><div class="content-top"><h3>${a.title}</h3><span class="content-badge">热门</span></div><p>${a.summary}</p><div class="meta-list">${a.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div></article></a>`).join('');
-    document.getElementById('latestGrid').innerHTML = latest.map(a => `<a class="article-link" href="articles/${a.slug || a.id}.html"><article class="topic-card"><h3>${a.title}</h3><p>${a.summary}</p><div class="meta"><span class="tag">${a.category}</span><span class="tag good">${a.updatedAt}</span></div></article></a>`).join('');
+    document.getElementById('popularGrid').innerHTML = popular.map(a => `<a class="article-link" href="${a.href}"><article class="content-card"><div class="content-top"><h3>${a.title}</h3><span class="content-badge">热门</span></div><p>${a.summary}</p><div class="meta-list">${a.tags.map(t=>`<span class="tag alt">${t}</span>`).join('')}</div></article></a>`).join('');
+    document.getElementById('latestGrid').innerHTML = latest.map(a => `<a class="article-link" href="${a.href}"><article class="topic-card"><h3>${a.title}</h3><p>${a.summary}</p><div class="meta"><span class="tag">${a.category}</span><span class="tag good">${a.updatedAt}</span></div></article></a>`).join('');
     document.getElementById('hotTags').innerHTML = allTags.map(t => `<span class="chip" data-tag="${t}">${t}</span>`).join('');
     document.getElementById('topicGrid').innerHTML = topics.map(t => `<a class="article-link" href="${t.href}"><article class="topic-card"><h3>${t.title}</h3><p>${t.summary}</p><div class="meta"><span class="tag alt">推荐专题</span></div></article></a>`).join('');
-    document.getElementById('articleDirectory').innerHTML = directoryItems.map((a, i) => `<a class="article-link" href="articles/${a.slug || a.id}.html"><article class="topic-card"><div class="content-top"><h3>${String(i + 1).padStart(2, '0')}. ${a.title}</h3><span class="content-badge">${a.category}</span></div><p>${a.summary}</p><div class="meta"><span class="tag good">${a.updatedAt}</span><span class="tag alt">#${a.tags[0] || '攻略'}</span></div></article></a>`).join('');
+    document.getElementById('articleDirectory').innerHTML = directoryItems.map((a, i) => `<a class="article-link" href="${a.href}"><article class="topic-card"><div class="content-top"><h3>${String(i + 1).padStart(2, '0')}. ${a.title}</h3><span class="content-badge">${a.category}</span></div><p>${a.summary}</p><div class="meta"><span class="tag good">${a.updatedAt}</span><span class="tag alt">#${a.tag}</span></div></article></a>`).join('');
 
     function filterByTag(tag) {
-      const q = (search.value || tag || '').trim().toLowerCase();
-      const filtered = window.HD2_CONTENTS.filter(a => !q || a.title.toLowerCase().includes(q) || a.tags.join(' ').toLowerCase().includes(q));
-      document.querySelectorAll('#popularGrid article, #latestGrid article').forEach((card, idx) => card.classList.toggle('hidden', !filtered[idx % filtered.length] && q));
+      const q = (document.getElementById('globalSearch').value || tag || '').trim().toLowerCase();
+      document.querySelectorAll('#popularGrid article').forEach((card, idx) => {
+        const item = popular[idx];
+        card.parentElement.style.display = !q || item.title.toLowerCase().includes(q) || item.tags.join(' ').toLowerCase().includes(q) ? '' : 'none';
+      });
+      document.querySelectorAll('#latestGrid article').forEach((card, idx) => {
+        const item = latest[idx];
+        card.parentElement.style.display = !q || item.title.toLowerCase().includes(q) ? '' : 'none';
+      });
       document.querySelectorAll('#articleDirectory article').forEach((card, idx) => {
         const article = directoryItems[idx];
-        const match = !q || (article && (article.title.toLowerCase().includes(q) || article.tags.join(' ').toLowerCase().includes(q)));
+        const match = !q || (article && (article.title.toLowerCase().includes(q) || article.summary.toLowerCase().includes(q) || article.tag.toLowerCase().includes(q)));
         card.parentElement.style.display = match ? '' : 'none';
       });
     }
 
+    const search = document.getElementById('globalSearch');
+    const tagFilters = document.querySelectorAll('#tagFilters .chip');
+    const keywordChips = document.querySelectorAll('#keywordChips .pill');
     search.addEventListener('input', () => filterByTag(search.value));
     tagFilters.forEach(chip => chip.addEventListener('click', () => { tagFilters.forEach(c=>c.classList.remove('active')); chip.classList.add('active'); filterByTag(chip.dataset.filter === 'all' ? '' : chip.dataset.filter); }));
     keywordChips.forEach(chip => chip.addEventListener('click', () => { search.value = chip.dataset.keyword; filterByTag(chip.dataset.keyword); }));
